@@ -1,0 +1,18 @@
+# Sumo Logic query
+
+#filter logs
+_sourceCategory=api_logs
+
+| json "endpoint", "response_time"
+
+| where endpoint = "/api/data
+
+#Filter slow responses(> 3000 miliseconds or 3 seconds)
+
+| where response_time > 3000
+
+| timeslice  10m
+
+| count by _timeslice
+
+
